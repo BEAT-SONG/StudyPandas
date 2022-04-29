@@ -1,0 +1,61 @@
+* 중복데이터
+- 데이터 분석 전에 중복 데이터를 확인하고 처리하는 데이터 클린징 작업이 필요
+- 중복데이터 확인 : duplicated()
+	# duplicated에 keep을 지정을 안하면, 중복값 중에 첫번째 값은 False
+	# 중복된 값 중에 첫번째를 제외한 모두 True, 제거할 때는 True인 행만 제거
+
+	#  - keep = 'first' : default 값 / 중복값 중에 첫번째 값은 False, 중복된 값 중에 첫번째를 제외한 모두 True
+	#  - keep = 'last' : 중복값 중 마지막 값은 False, 나머진 True -> 제거할 때는 True 제거
+	#  - keep = False : False가 나온것은 중복이 하나도 없다는 것 -> 제거할 때는 True 제거
+- 중복데이터 삭제 : drop_duplicates()
+	# - keep = 'first' : 첫번째 중복값만 남기고 중복 데이터 제거하기 
+	# - keep = 'last' : 마지막 중복값들만 남기고, 나머지 제거하기
+	# - keep = False : 중복된 데이터 전체 삭제하기
+- 기초통계 : describe()
+- 빈도분석 : value_counts()
+
+
+* 데이터 탐색하기 그룹 재구조화 시계열
+* 데이터 탐색하기
+1. 데이터 그룹분석하기
+- 그룹화하기 : df.groupby(['컬럼'])
+- 그룹화환 데이터 전체 확인 : df.head()
+- 특정 그룹의 데이터 조회 : df.get_group("데이터")
+	- 여러개 그룹 조회 시, 튜플 형태( ) : df_temp.get_group(("A","m"))
+- 반별 수학점수 평균 구하기 3가지
+ 	방법 1. df.groupby('class')['math'].mean()
+	방법 2. df['math'].groupby(df['class']).mean()
+	방법 3. df.groupby(['class']).mean()[['math']]
+
+- 실제 데이터가 어떻게 구성되어 있는지 확인 : groups
+
+2. 재구조화
+-  cut() : 동일한 길이(값의 범위)로 3구간으로 나눈다
+	pd.cut(df['math'],3)
+- agg() : 기초통계
+	df2.agg(['count','mean','std','min','max'])
+- qcut() : 동일한 개수로 3구간으로 나눈다
+	qcut(df['math'],3)
+	# labels =False : 범주의 번호 표시하기
+	 pd.qcut(df['math'],3, labels =False)
+	 pd.qcut(df['math'],3,labels = np.arange(3, 0 , -1)) # 범주 3부터 0까지 -1감소
+
+3. 원-핫 인코딩
+- dtypes() : 데이터 타입 확인
+- pd.get_dummies(df) : 원-핫 인코딩
+	# 범주형 컬럼에 대해서만 가능합니다
+	# 범주형이 아닌 컬럼에 대해서 범주형 만들면 가능
+	# get_dummies() : 숫자값을 제외한 object 데이터 타입만 가능
+	# 해당 one-hot 인코딩 되는 원본 컬럼은 없어지고,
+	# 해당 "컬럼명_범주명" 으로 컬럼이 만들어진다.
+
+4. 데이터 전치
+- df.T : 데이터 전치
+	# 전치 : 행과 열의 위치를 바꿉니다
+	# 컬럼 -> 행 인덱스로 바뀌고,
+	# 행인덱스 번호 -> 컬럼명 바뀝니다
+
+
+
+
+

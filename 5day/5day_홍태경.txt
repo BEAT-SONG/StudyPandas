@@ -1,0 +1,35 @@
+import pandas as pd
+df = pd.read_csv("./data/bicycle_dup.csv",encoding="euc-kr")
+
+df.duplicated(['이용거리'])
+
+
+df[['이용거리','나이']].duplicated() == 'True'
+
+df[['이용거리','나이']].duplicated()
+
+len(df.loc[df.duplicated(['이용거리','나이'])])
+
+len(df.duplicated(['이용거리','나이'], keep=False))
+
+len(df.loc[df.duplicated(['이용거리','나이'], keep=False)])
+
+len(df.loc[df.drop_duplicates(['이용거리'], keep=False)])
+
+df.drop_duplicates(['이용거리'], keep=False)
+
+df.drop_duplicates(['이용거리'], keep=False)
+
+df1= df.drop_duplicates(['이용거리'], keep=False)
+
+df1.describe()
+
+df2 = df.duplicated(['이용거리'], keep='first')
+df2.describe()
+
+df[df2]
+
+len(df) -163
+
+df2.value_counts()
+
